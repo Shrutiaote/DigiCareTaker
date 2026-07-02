@@ -1,13 +1,13 @@
-package com.digicaretaker.DAO;
+package com.digicaretaker.service;
 
 import com.digicaretaker.entity.Users;
 
-public interface UserDAO {
+public interface UserService {
 
-	    boolean saveUser(Users user);
+	 boolean registerUser(Users user);
 
-	    Users getUserByEmail(String email);
-	    
+	    Users loginUser(String email, String password);
+
 	    Users getUserById(int user_id);
 
 	    boolean updateUser(Users user);

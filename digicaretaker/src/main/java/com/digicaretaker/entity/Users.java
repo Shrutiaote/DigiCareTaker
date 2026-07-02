@@ -1,18 +1,19 @@
 package com.digicaretaker.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Table;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "users")
 public class Users {
 
 	    @Id
@@ -38,11 +39,11 @@ public class Users {
 	    @Column(name = "gender")
 	    private String gender;
 
-	    @Temporal(TemporalType.DATE)
+	   
 	    @Column(name = "date_of_birth")
-	    private Date dateOfBirth;
+	    private LocalDate dateOfBirth;
 
-	    @Column(name = "address")
+	    @Column(name = "address", columnDefinition = "TEXT")
 	    private String address;
 
 	    @ManyToOne
@@ -52,16 +53,16 @@ public class Users {
 	    @Column(name = "status")
 	    private String status;
 
-	    @Temporal(TemporalType.TIMESTAMP)
+	    
 	    @Column(name = "created_at")
-	    private Date createdAt;
+	    private LocalDateTime createdAt;
 	    
 	    public Users() {
 			// TODO Auto-generated constructor stub
 		}
 
 		public Users(int userId, String firstName, String lastName, String email, String password, String phone,
-				String gender, Date dateOfBirth, String address, Role role, String status, Date createdAt) {
+				String gender, LocalDate dateOfBirth, String address, Role role, String status, LocalDateTime createdAt) {
 			super();
 			this.userId = userId;
 			this.firstName = firstName;
@@ -133,11 +134,11 @@ public class Users {
 			this.gender = gender;
 		}
 
-		public Date getDateOfBirth() {
+		public LocalDate getDateOfBirth() {
 			return dateOfBirth;
 		}
 
-		public void setDateOfBirth(Date dateOfBirth) {
+		public void setDateOfBirth(LocalDate dateOfBirth) {
 			this.dateOfBirth = dateOfBirth;
 		}
 
@@ -165,11 +166,11 @@ public class Users {
 			this.status = status;
 		}
 
-		public Date getCreatedAt() {
+		public LocalDateTime getCreatedAt() {
 			return createdAt;
 		}
 
-		public void setCreatedAt(Date createdAt) {
+		public void setCreatedAt(LocalDateTime createdAt) {
 			this.createdAt = createdAt;
 		}
 	    
