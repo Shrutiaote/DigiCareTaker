@@ -11,14 +11,19 @@ public class UserServiceimpl implements UserService{
 
 	@Override
 	public boolean registerUser(Users user) {
-		// TODO Auto-generated method stub
+		
 		return userDAO.saveUser(user);
 	}
 
 	@Override
 	public Users loginUser(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		 Users user = userDAO.getUserByEmail(email);
+
+		    if (user != null && user.getPassword().equals(password)) {
+		        return user;
+		    }
+
+		    return null;
 	}
 
 	@Override

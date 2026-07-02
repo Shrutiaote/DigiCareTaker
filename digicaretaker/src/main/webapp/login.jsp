@@ -9,9 +9,16 @@
 </head>
 <body>
 
-<h2>Login Page</h2>
+<h2>DigiCareTaker Login</h2>
 
-<p>Registration successful! 🎉</p>
+<%
+String error = (String) request.getAttribute("error");
+if(error != null){
+%>
+<p style="color:red;"><%= error %></p>
+<%
+}
+%>
 
 <form action="LoginServlet" method="post">
 
@@ -24,6 +31,10 @@
     <button type="submit">Login</button>
 
 </form>
+
+<br>
+
+<a href="register.jsp">Create New Account</a>
 
 </body>
 </html>

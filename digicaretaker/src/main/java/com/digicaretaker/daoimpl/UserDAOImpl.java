@@ -2,6 +2,7 @@ package com.digicaretaker.daoimpl;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.digicaretaker.DAO.UserDAO;
 import com.digicaretaker.entity.Users;
@@ -26,7 +27,7 @@ public class UserDAOImpl implements UserDAO{
 
 	    } catch (Exception e) {
 
-	        e.printStackTrace();   // Print the ORIGINAL exception first
+	        e.printStackTrace();
 
 	        try {
 	            if (transaction != null && transaction.isActive()) {
@@ -42,8 +43,20 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public Users getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+		        String hql = "FROM Users WHERE email = :email";
+
+		        Query<Users> query = session.createQuery(hql, Users.class);
+		        query.setParameter("email", email);
+
+		        return query.uniqueResult();
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return null;
 	}
 
 	@Override
