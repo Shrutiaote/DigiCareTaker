@@ -82,6 +82,16 @@ button:hover{
 
 <input type="date" name="dateOfBirth">
 
+<label>Register As</label><br>
+
+<select name="role_id" required>
+    <option value="">-- Select Role --</option>
+    <option value="1">Admin</option>
+    <option value="2">Elder</option>
+    <option value="3">Family</option>
+    <option value="4">Volunteer</option>
+</select>
+
 <label>Address</label>
 
 <textarea name="address"></textarea>

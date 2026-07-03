@@ -1,5 +1,7 @@
 package com.digicaretaker.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -61,20 +63,108 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public boolean updateUser(Users user) {
-		// TODO Auto-generated method stub
-		return false;
+		Transaction transaction = null;
+
+	    try(Session session =
+	            HibernateUtil.getSessionFactory().openSession()) {
+
+	        transaction = session.beginTransaction();
+
+	        session.update(user);
+
+	        transaction.commit();
+
+	        return true;
+
+	    } catch(Exception e) {
+
+	        if(transaction != null) {
+	            transaction.rollback();
+	        }
+
+	        e.printStackTrace();
+	    }
+
+	    return false;
 	}
 
 	@Override
 	public boolean deleteUser(int user_id) {
-		// TODO Auto-generated method stub
-		return false;
+		 Transaction transaction = null;
+
+		    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+		        transaction = session.beginTransaction();
+
+		        Users user = session.get(Users.class, user_id);
+
+		        if (user != null) {
+		            session.delete(user);
+		            transaction.commit();
+		            return true;
+		        }
+
+		    } catch (Exception e) {
+
+		        if (transaction != null) {
+		            transaction.rollback();
+		        }
+
+		        e.printStackTrace();
+		    }
+
+		    return false;
 	}
 
 	@Override
 	public Users getUserById(int user_id) {
-		// TODO Auto-generated method stub
-		return null;
+		 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+		        return session.get(Users.class, user_id);
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return null;
+	}
+
+	@Override
+	public List<Users> getAllUsers() {
+		 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+		        String hql = "FROM Users";
+
+		        Query<Users> query = session.createQuery(hql, Users.class);
+
+		        return query.list();
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return null;
+	}
+
+	@Override
+	public List<Users> searchUsers(String keyword) {
+		 try(Session session =
+		            HibernateUtil.getSessionFactory().openSession()) {
+
+		        String hql =
+		        "FROM Users WHERE firstName LIKE :key "
+		      + "OR lastName LIKE :key "
+		      + "OR email LIKE :key "
+		      + "OR phone LIKE :key";
+
+		        Query<Users> query =
+		                session.createQuery(hql, Users.class);
+
+		        query.setParameter("key", "%" + keyword + "%");
+
+		        return query.list();
+
+		    }
 	}
 
 }

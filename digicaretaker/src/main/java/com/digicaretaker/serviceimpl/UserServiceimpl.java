@@ -1,5 +1,7 @@
 package com.digicaretaker.serviceimpl;
 
+import java.util.List;
+
 import com.digicaretaker.DAO.UserDAO;
 import com.digicaretaker.daoimpl.UserDAOImpl;
 import com.digicaretaker.entity.Users;
@@ -39,8 +41,17 @@ public class UserServiceimpl implements UserService{
 
 	@Override
 	public boolean deleteUser(int user_id) {
-		
 		return userDAO.deleteUser(user_id);
+	}
+
+	@Override
+	public List<Users> getAllUsers() {
+		return userDAO.getAllUsers();
+	}
+	
+	@Override
+	public List<Users> searchUsers(String keyword) {
+	    return userDAO.searchUsers(keyword);
 	}
 
 }

@@ -49,7 +49,10 @@ public class RegisterServlet extends HttpServlet {
         user.setStatus("ACTIVE");
         user.setCreatedAt(LocalDateTime.now());
 
-        Role role = new Role(2); // ELDER role
+        int role_id = Integer.parseInt(request.getParameter("role_id"));
+
+        Role role = new Role(role_id);
+
         user.setRole(role);
 
         boolean registered = userService.registerUser(user);
